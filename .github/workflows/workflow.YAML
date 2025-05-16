@@ -8,22 +8,13 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1) check out source
       - uses: actions/checkout@v4
-
-      # 2) install Node 18
       - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      # 3) install deps & build
       - run: npm ci
       - run: npm run build
 
-      # 4) deploy to Firebase Hosting
-      - uses: w9jds/firebase-action@v13.2.4
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: rsvp-project-b89af
+      - name: Deploy to Firebase Hosting
+        run: npx firebase-tools deploy --only hosting --project rsvp-project-b89af --token "${{ secrets.FIREBASE_TOKEN }}"
