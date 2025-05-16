@@ -21,9 +21,8 @@ jobs:
       - run: npm run build
 
       # 4) deploy to Firebase Hosting
-      - uses: w9jds/firebase-action@v13.1.0
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: rsvp-project-b89af
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_TOKEN }}
+          projectId: rsvp-project-b89af
